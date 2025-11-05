@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1050464609368",
+    "project_id": "stayhealthyap",
+    "storage_bucket": "stayhealthyap.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050464609368:android:76ccde6920dcb4b11bd62d",
+        "android_client_info": {
+          "package_name": "com.example.prjfirebaseweek08"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAONGuEPT9O6y5RGOuOJfFczA2MJtrWcv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050464609368:android:a0afeff5567df7b31bd62d",
+        "android_client_info": {
+          "package_name": "com.example.stayhealthyap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAONGuEPT9O6y5RGOuOJfFczA2MJtrWcv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
