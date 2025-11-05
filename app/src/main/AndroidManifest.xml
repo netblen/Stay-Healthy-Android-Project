@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -10,23 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StayHealthyAP">
-
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
         <!-- Launcher -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- RegisterActivity -->
-        <activity android:name=".RegisterActivity" />
-
-        <!-- MainActivity -->
+        </activity> <!-- RegisterActivity -->
+        <activity android:name=".RegisterActivity" /> <!-- MainActivity -->
         <activity android:name=".MainActivity" />
-
     </application>
 
 </manifest>
