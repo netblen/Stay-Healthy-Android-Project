@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity"
+    android:background="@color/black">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Stay Healthy"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView1"
+                android:layout_width="370dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#181818"
+                app:cardCornerRadius="16dp">
+
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_bg">
+
+
+                    <ImageView
+                        android:id="@+id/imgSleep"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_sleep" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvSleep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:padding="20dp"
+                    android:text="Sleep"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/edSleepData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="230dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#838282"
+                    android:ems="5"
+                    android:inputType="numberDecimal"
+                    android:text=" Enter data"
+                    android:textColor="#838282" />
+
+                <Button
+                    android:id="@+id/btnEnterSleep"
+                    android:layout_width="99dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="233dp"
+                    android:layout_marginTop="70dp"
+                    android:background="@drawable/btn_custom"
+                    android:text="Enter" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="370dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#181818"
+                app:cardCornerRadius="16dp">
+
+                <TextView
+                    android:id="@+id/tvDailyActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="135dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Daily activity"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_bg">
+
+
+                    <ImageView
+                        android:id="@+id/imgSteps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_steps" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvSteps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="25dp"
+                    android:padding="20dp"
+                    android:text="Steps"
+                    android:textSize="20dp" />
+
+
+                <TextView
+                    android:id="@+id/tvStepsData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginTop="50dp"
+                    android:text="0"
+                    android:textColor="#838282"
+                    android:textSize="20sp" />
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="95dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_bg">
+
+
+                    <ImageView
+                        android:id="@+id/imgTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_timer" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="80dp"
+                    android:padding="20dp"
+                    android:text="mins"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvTimeMoved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginTop="103dp"
+                    android:text="0"
+                    android:textColor="#838282"
+                    android:textSize="20sp" />
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="145dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_bg">
+
+
+                    <ImageView
+                        android:id="@+id/imgCal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_burn_cal" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvCal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="130dp"
+                    android:padding="20dp"
+                    android:text="Cals burnt"
+                    android:textSize="20dp" />
+
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginTop="150dp"
+                    android:text="0"
+                    android:textColor="#838282"
+                    android:textSize="20sp" />
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView3"
+                android:layout_width="370dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#181818"
+                app:cardCornerRadius="16dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/imgBtnRunning"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/circle_bg"
+                            android:contentDescription="person walking"
+                            android:padding="10dp"
+                            android:scaleType="fitXY"
+
+                            app:srcCompat="@drawable/ic_run" />
+
+                        <TextView
+                            android:id="@+id/tvRunning"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Running"
+                            android:layout_marginLeft="6dp"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/imgButtonSwimming"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/circle_bg"
+                            android:contentDescription="person walking"
+                            android:padding="10dp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/ic_swimming" />
+
+                        <TextView
+                            android:id="@+id/tvSwimming"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Swimming"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/imgBtnWalking"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/circle_bg"
+                            android:contentDescription="person walking"
+                            android:padding="10dp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/ic_walk" />
+
+                        <TextView
+                            android:id="@+id/tvWalking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="walking"
+                            android:layout_marginLeft="7dp"/>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/imgBtnCircuit"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/circle_bg"
+                            android:contentDescription="person walking"
+                            android:padding="10dp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/ic_circuit_workout" />
+
+                        <TextView
+                            android:id="@+id/tvCircuit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Circuit"
+                            android:layout_marginLeft="10dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView4"
+                android:layout_width="370dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#181818"
+                app:cardCornerRadius="16dp">
+
+
+                <TextView
+                    android:id="@+id/tvTimeWorkedOutThisWeek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="25dp"
+                    android:text="00:00"
+                    android:textSize="25dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Workouts this week" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="70dp"
+                    android:text="Ready for some exercise?" />
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView5"
+                android:layout_width="370dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#181818"
+                app:cardCornerRadius="16dp">
+
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_bg">
+
+
+                    <ImageView
+                        android:id="@+id/imgWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_body_weight" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:padding="20dp"
+                    android:text="00.0 kg"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/eWeightData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="230dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#838282"
+                    android:ems="6"
+                    android:inputType="numberDecimal"
+                    android:text=" Enter Weight"
+                    android:textColor="#838282" />
+
+                <Button
+                    android:id="@+id/btnEnterWeight"
+                    android:layout_width="99dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="233dp"
+                    android:layout_marginTop="70dp"
+                    android:background="@drawable/btn_custom"
+                    android:text="Enter" />
+
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="20dp"
+                android:layout_height="80dp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="#4E4E4E"
+        app:labelVisibilityMode="labeled"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
+
+ <EditText
+            android:id="@+id/edStepsData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:inputType="numberDecimal"
+            android:text=" Enter steps"
+            android:layout_marginLeft="230dp"
+            android:layout_marginTop="35dp"
+            android:textColor="#838282"
+            android:backgroundTint="#838282"/>
+
+
+<EditText
+            android:id="@+id/edTimeMoveData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:inputType="numberDecimal"
+            android:text=" Enter time"
+            android:layout_marginLeft="230dp"
+            android:layout_marginTop="90dp"
+            android:textColor="#838282"
+            android:backgroundTint="#838282"/>
+
+<EditText
+            android:id="@+id/edTimeCalsBurnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:inputType="numberDecimal"
+            android:text=" Enter Cals"
+            android:layout_marginLeft="230dp"
+            android:layout_marginTop="140dp"
+            android:textColor="#838282"
+            android:backgroundTint="#838282"/>-->
