@@ -63,26 +63,31 @@
                     android:text="Sleep"
                     android:textSize="20dp" />
 
+
                 <EditText
                     android:id="@+id/edSleepData"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:layout_marginLeft="230dp"
                     android:layout_marginTop="10dp"
-                    android:backgroundTint="#838282"
-                    android:ems="5"
+                    android:background="@drawable/edittext_style"
+                    android:ems="6"
                     android:inputType="numberDecimal"
-                    android:text=" Enter data"
+                    android:text="Enter data"
+                    android:gravity="center"
                     android:textColor="#838282" />
+
+
 
                 <Button
                     android:id="@+id/btnEnterSleep"
-                    android:layout_width="99dp"
+                    android:layout_width="180dp"
                     android:layout_height="48dp"
-                    android:layout_marginLeft="233dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="70dp"
                     android:background="@drawable/btn_custom"
-                    android:text="Enter" />
+                    android:backgroundTint="@color/black"
+                    android:text="Record this time" />
 
             </androidx.cardview.widget.CardView>
 
@@ -110,7 +115,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="45dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/circle_bg">
+                    android:background="@drawable/circle_bg"
+                    android:backgroundTint="#2B9516">
 
 
                     <ImageView
@@ -148,7 +154,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="95dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/circle_bg">
+                    android:background="@drawable/circle_bg"
+                    android:backgroundTint="#1393C8">
 
 
                     <ImageView
@@ -156,7 +163,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        app:srcCompat="@drawable/ic_timer" />
+                        app:srcCompat="@drawable/ic_timer"
+                        />
                 </FrameLayout>
 
                 <TextView
@@ -185,7 +193,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="145dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/circle_bg">
+                    android:background="@drawable/circle_bg"
+                    android:backgroundTint="#C73AD3">
 
 
                     <ImageView
@@ -220,12 +229,16 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
+
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardView3"
                 android:layout_width="370dp"
                 android:layout_height="130dp"
                 android:layout_marginTop="20dp"
                 app:cardBackgroundColor="#181818"
+                app:strokeColor="#A05332"
+                app:strokeWidth="2dp"
                 app:cardCornerRadius="16dp">
 
 
@@ -352,13 +365,15 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardView4"
                 android:layout_width="370dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="20dp"
+                app:strokeColor="#3AE0A6"
+                app:strokeWidth="2dp"
                 app:cardBackgroundColor="#181818"
                 app:cardCornerRadius="16dp">
 
@@ -374,7 +389,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="150dp"
+                    android:layout_marginLeft="200dp"
                     android:layout_marginTop="30dp"
                     android:text="Workouts this week" />
 
@@ -385,7 +400,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="70dp"
                     android:text="Ready for some exercise?" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
 
             <androidx.cardview.widget.CardView
@@ -403,7 +418,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/circle_bg">
+                    android:background="@drawable/circle_bg"
+                    android:backgroundTint="#3C05E0">
 
 
                     <ImageView
@@ -429,7 +445,7 @@
                     android:layout_height="48dp"
                     android:layout_marginLeft="230dp"
                     android:layout_marginTop="10dp"
-                    android:backgroundTint="#838282"
+                    android:background="@drawable/edittext_style"
                     android:ems="6"
                     android:inputType="numberDecimal"
                     android:text=" Enter Weight"
@@ -439,7 +455,7 @@
                     android:id="@+id/btnEnterWeight"
                     android:layout_width="99dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="233dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginTop="70dp"
                     android:background="@drawable/btn_custom"
                     android:text="Enter" />
@@ -462,7 +478,8 @@
         app:menu="@menu/bottom_nav_menu"
         app:itemIconTint="@color/white"
         app:itemTextColor="#4E4E4E"
-        app:labelVisibilityMode="labeled"/>
+        app:labelVisibilityMode="labeled"
+        android:background="@color/black"/>
 
 
 
