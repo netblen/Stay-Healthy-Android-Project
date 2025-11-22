@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EDEDED"
-    tools:context=".ProfileActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ProfileFragment"
+    android:background="#EDEDED">
 
 
-
-
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginLeft="-100dp"
+                android:layout_marginTop="40dp"
                 android:fontFamily="sans-serif"
                 android:text="Profile"
                 android:textColor="@color/black"
@@ -37,10 +38,10 @@
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="16dp">
 
-        <!--this is so i can make it circle ref https://stackoverflow.com/questions/22105775/imageview-in-circular-through-xml-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                <!--this is so i can make it circle ref https://stackoverflow.com/questions/22105775/imageview-in-circular-through-xml-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -59,7 +60,7 @@
                     <Button
                         android:id="@+id/btnEdit"
                         android:layout_width="60dp"
-                        android:layout_height="48dp"
+                        android:layout_height="40dp"
                         android:layout_marginRight="20dp"
                         android:background="@drawable/btn_custom"
                         android:fontFamily="sans-serif"
@@ -83,9 +84,9 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
@@ -95,9 +96,9 @@
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/tvUserDetails"
@@ -161,54 +162,53 @@
             -->
 
 
-            <EditText
-                android:id="@+id/edWeight"
-                android:layout_width="60dp"
-                android:height="49dp"
-                android:gravity="center"
-                android:layout_height="48dp"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:text="0.00"
-                android:textColor="#333232"
-                app:layout_constraintBaseline_toBaselineOf="@id/tvWeight"
-                app:layout_constraintLeft_toRightOf="@id/tvWeight"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/roundede_edtext" />
+                    <EditText
+                        android:id="@+id/edWeight"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/roundede_edtext"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:text="0.00"
+                        android:textColor="#333232"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tvWeight"
+                        app:layout_constraintLeft_toRightOf="@id/tvWeight" />
 
-            <TextView
-                android:id="@+id/tvHeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tvWeight"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="25dp"
-                android:text="Height"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/tvHeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="15dp"
+                        android:text="Height"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvWeight" />
 
-            <EditText
-                android:id="@+id/edHeight"
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_height="48dp"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:text="0.00"
-                android:textColor="#333232"
-                app:layout_constraintBaseline_toBaselineOf="@id/tvHeight"
-                app:layout_constraintLeft_toRightOf="@id/tvWeight"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/roundede_edtext"
-                android:layout_marginTop="2dp"/>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <EditText
+                        android:id="@+id/edHeight"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/roundede_edtext"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:text="0.00"
+                        android:textColor="#333232"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tvHeight"
+                        app:layout_constraintLeft_toRightOf="@id/tvWeight" />
 
 
-    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView3"
@@ -219,9 +219,9 @@
                 app:cardCornerRadius="16dp">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
 
                     <TextView
@@ -310,7 +310,7 @@
                 <Switch
                     android:id="@+id/switchNotifs"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="270dp"
                     android:layout_marginTop="18dp"
                     android:text="off/on "
@@ -326,6 +326,8 @@
         </LinearLayout>
 
 
+    </ScrollView>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-

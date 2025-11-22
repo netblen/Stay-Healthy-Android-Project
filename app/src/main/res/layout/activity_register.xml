@@ -73,7 +73,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#2E7D32"
             android:padding="10dp"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"/>
 
         <TextView
             android:id="@+id/textRegister"

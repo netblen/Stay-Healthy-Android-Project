@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StayHealthyAP">
         <activity
+            android:name=".SleepActivity"
+            android:exported="false" />
+        <activity
             android:name=".WorkoutActivity"
             android:exported="false" />
         <activity
