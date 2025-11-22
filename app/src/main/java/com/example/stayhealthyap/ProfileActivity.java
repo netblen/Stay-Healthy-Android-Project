@@ -191,7 +191,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setupBottomNavigation() {
-        bottomNavigationView = findViewById(R.id.navigation);
+        //bottomNavigationView = findViewById(R.id.navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_profile);
         bottomNavigationView.setSelectedItemId(R.id.nav_chats);
 
