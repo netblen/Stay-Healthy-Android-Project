@@ -3,6 +3,7 @@ package com.example.stayhealthyap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +12,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.snackbar.Snackbar;
 
 public class SleepActivity extends AppCompatActivity implements View.OnClickListener {
+
+    Button  btnChooseDay, btnEnterSleep;
+
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,20 +30,41 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        initialize();
+
     }
 
-    //on ce the user enters the sleep time u can change th etv sleep hrs and mins to that
+    private void initialize() {
+        btnChooseDay = findViewById(R.id.btnChooseDay);
+        btnChooseDay.setOnClickListener(this);
 
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish()); // Back button
+
+    }
+
+/// get the time from the tv hrs ands mins and when they click enter data u display it where  they enter it
+/// user acan change what day they want to enter the sleep for by the dialog calaender popup by clicking today
 
 
 
     @Override
     public void onClick(View v) {
         //on btn click btnChooseDay
+        if(v.getId() == R.id.btnChooseDay){
+
+            //Snackbar.make(v, "clicked today btn shoud be showingf u the dialog now", Snackbar.LENGTH_LONG).show();
+            showCalenderDialog();
+
+        }
+    }
+
+    private void showCalenderDialog() {
         BottomSheetDialog btmSheetDialog = new BottomSheetDialog(this);
         View view = getLayoutInflater().inflate(R.layout.calender_popup, null);
 
-        Button btnCancel = findViewById(R.id.btnCancel);
+        Button btnCancel = view.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,12 +72,17 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        Button btnSet = findViewById(R.id.btnSet);
+        Button btnSet = view.findViewById(R.id.btnSet);
         btnSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //change it to the right day
+                ///change it to the right day
+
             }
         });
+
+        btmSheetDialog.setContentView(view);
+        btmSheetDialog.show();
+
     }
 }

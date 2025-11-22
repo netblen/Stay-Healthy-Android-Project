@@ -31,7 +31,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView1"
                 android:layout_width="370dp"
-                android:layout_height="130dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="20dp"
                 app:cardBackgroundColor="#181818"
                 app:cardCornerRadius="16dp">
@@ -41,7 +41,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/circle_bg">
 
@@ -59,37 +59,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
-                    android:padding="20dp"
+                    android:padding="15dp"
+                    android:layout_marginTop="10dp"
                     android:text="Sleep"
                     android:textSize="20dp" />
-
-
-                <EditText
-                    android:id="@+id/edSleepData"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="230dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/edittext_style"
-                    android:ems="6"
-                    android:inputType="numberDecimal"
-                    android:text="Enter data"
-                    android:gravity="center"
-                    android:textColor="#838282" />
-
 
 
                 <Button
                     android:id="@+id/btnEnterSleep"
                     android:layout_width="180dp"
                     android:layout_height="48dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="70dp"
+                    android:layout_marginLeft="170dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/btn_custom"
-                    android:text="Record this time"
+                    android:text="Record sleep time"
                     android:textAllCaps="false"/>
 
             </androidx.cardview.widget.CardView>
+
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
@@ -489,6 +477,31 @@
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 <!--
+
+cRD VIEW 1 <EditText
+                    android:id="@+id/edSleepData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="230dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_style"
+                    android:ems="6"
+                    android:inputType="numberDecimal"
+                    android:text="Enter data"
+                    android:gravity="center"
+                    android:textColor="#838282" />
+
+
+
+                <Button
+                    android:id="@+id/btnEnterSleep"
+                    android:layout_width="180dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="70dp"
+                    android:background="@drawable/btn_custom"
+                    android:text="Record this time"
+                    android:textAllCaps="false"/>
 
  <EditText
             android:id="@+id/edStepsData"

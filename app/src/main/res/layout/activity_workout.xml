@@ -14,7 +14,6 @@
         android:layout_height="30dp"
         android:src="?attr/homeAsUpIndicator"
         app:tint="@color/white"
-        app:layout_constraintTop_toTopOf="@id/tvWorkoutCat"
         app:layout_constraintBottom_toBottomOf="@id/tvWorkoutCat"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="20dp"

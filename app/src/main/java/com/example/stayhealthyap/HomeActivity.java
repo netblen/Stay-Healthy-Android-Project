@@ -72,9 +72,9 @@ public class HomeActivity extends AppCompatActivity {
         userId = currentUser.getUid();
         todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-        edSleepData = findViewById(R.id.edSleepData);
+        //edSleepData = findViewById(R.id.edSleepData);
         eWeightData = findViewById(R.id.eWeightData);
-        btnEnterSleep = findViewById(R.id.btnEnterSleep);
+        btnEnterSleep = findViewById(R.id.btnEnterSleep); //change thias change this to open the sleep actoivity
         btnEnterWeight = findViewById(R.id.btnEnterWeight);
         tvWeight = findViewById(R.id.tvWeight);
         imgBtnRunning = findViewById(R.id.imgBtnRunning);
@@ -87,7 +87,8 @@ public class HomeActivity extends AppCompatActivity {
         tvCalsBurnt = findViewById(R.id.textView4);
         tvTimeWorkedOutThisWeek = findViewById(R.id.tvTimeWorkedOutThisWeek);
 
-        btnEnterSleep.setOnClickListener(v -> saveSleepData());
+        //btnEnterSleep.setOnClickListener(v -> saveSleepData()); //nopt gonna have any data to push to the other page now
+        btnEnterSleep.setOnClickListener(v -> startActivitySleep());
         btnEnterWeight.setOnClickListener(v -> saveWeightData());
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -99,6 +100,7 @@ public class HomeActivity extends AppCompatActivity {
         setupBottomNavigation();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -107,6 +109,12 @@ public class HomeActivity extends AppCompatActivity {
         if (bottomNavigationView != null) {
             bottomNavigationView.setSelectedItemId(R.id.nav_home);
         }
+    }
+
+    // new one ima try and dop
+    private void startActivitySleep() {
+        Intent intent = new Intent(HomeActivity.this, SleepActivity.class);
+        startActivity(intent);
     }
 
     //starts the WorkoutActivity page
