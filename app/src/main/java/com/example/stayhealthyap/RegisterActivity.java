@@ -1,14 +1,10 @@
 package com.example.stayhealthyap;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.example.stayhealthyap.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -60,6 +56,13 @@ public class RegisterActivity extends AppCompatActivity {
                         Map<String, Object> user = new HashMap<>();
                         user.put("name", name);
                         user.put("email", email);
+
+                        //when the user creates their account we do not save this
+                        //will come a default
+                        user.put("weight", 0.0);
+                        user.put("height", 0.0);
+                        user.put("goal", "Stay Active"); // Default goal
+                        user.put("notifications", true); // Default to on
 
                         docRef.set(user)
                                 .addOnSuccessListener(unused -> {
