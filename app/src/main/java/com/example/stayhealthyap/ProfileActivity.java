@@ -194,19 +194,35 @@ public class ProfileActivity extends AppCompatActivity {
         //bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_profile);
-        bottomNavigationView.setSelectedItemId(R.id.nav_chats);
+       // bottomNavigationView.setSelectedItemId(R.id.nav_chats); // this line is overriding the one on top so I'll comment it out
 
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.nav_home) {
-                    // Go to Home
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     overridePendingTransition(0, 0);
+                    finish(); // Optional: close this activity
                     return true;
-                } else return itemId == R.id.nav_profile;
+                } else if (itemId == R.id.nav_profile) {
+                    // Already on profile, do nothing or refresh
+                    return true;
+                }
+                return false;
             }
+
+
+
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                int itemId = item.getItemId();
+//                if (itemId == R.id.nav_home) {
+//                    // Go to Home
+//                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//                    overridePendingTransition(0, 0);
+//                    return true;
+//                } else return itemId == R.id.nav_profile;
+//            }
         });
     }
 }
