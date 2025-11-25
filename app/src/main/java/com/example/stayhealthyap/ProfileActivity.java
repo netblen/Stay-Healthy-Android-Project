@@ -41,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
     private RadioGroup rgGoals;
     private RadioButton rbWeightLoss, rbBuildMuscle, rbStayActive;
     private Switch switchNotifs;
+    private Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,12 @@ public class ProfileActivity extends AppCompatActivity {
         rbBuildMuscle = findViewById(R.id.BuildMuscle);
         rbStayActive = findViewById(R.id.rbStayActive);
         switchNotifs = findViewById(R.id.switchNotifs);
+        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(v -> {
+            // Directly open LogoutActivity
+            startActivity(new Intent(ProfileActivity.this, LogoutActivity.class));
+        });
+
 
         setupBottomNavigation();
         // Check if user is logged in
@@ -193,7 +200,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void setupBottomNavigation() {
         //bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+        //bottomNavigationView.setSelectedItemId(R.id.nav_profile);
        // bottomNavigationView.setSelectedItemId(R.id.nav_chats); // this line is overriding the one on top so I'll comment it out
 
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {

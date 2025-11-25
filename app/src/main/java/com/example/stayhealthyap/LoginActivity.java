@@ -38,7 +38,9 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
 
-        auth.signOut(); // log out any user
+      // Commented this to actually use the logout page because this
+        // does it automatically but we still need to be able to logout manually
+        // auth.signOut(); // log out any user
 
     }
 
