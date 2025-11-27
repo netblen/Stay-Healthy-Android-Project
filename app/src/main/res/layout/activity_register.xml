@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EDEDED"
-    >
+    android:background="#EDEDED">
 
     <LinearLayout
         android:orientation="vertical"
@@ -28,8 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-
-
         <EditText
             android:id="@+id/inputName"
             android:hint="Full Name"
@@ -50,8 +47,7 @@
             android:inputType="textEmailAddress"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:background="@android:drawable/editbox_background_normal"
-            />
+            android:background="@android:drawable/editbox_background_normal" />
 
         <EditText
             android:id="@+id/inputPassword"
@@ -63,8 +59,20 @@
             android:textColor="@color/black"
             android:drawableStart="@android:drawable/ic_lock_idle_lock"
             android:textColorHint="@color/black"
-            android:background="@android:drawable/editbox_background_normal"
-            />
+            android:background="@android:drawable/editbox_background_normal" />
+
+        <!-- Confirm password added -->
+        <EditText
+            android:id="@+id/inputConfirmPassword"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:drawableStart="@android:drawable/ic_lock_idle_lock"
+            android:textColorHint="@color/black"
+            android:background="@android:drawable/editbox_background_normal" />
 
         <Button
             android:id="@+id/btnRegister"
@@ -84,7 +92,7 @@
             android:layout_marginTop="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </LinearLayout>
 
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

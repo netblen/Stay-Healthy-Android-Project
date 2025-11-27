@@ -8,13 +8,12 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText inputName, inputEmail, inputPassword;
+    private EditText inputName, inputEmail, inputPassword, inputConfirmPassword;
     private Button btnRegister;
     private FirebaseAuth auth;
     private FirebaseFirestore firestore;
@@ -27,23 +26,28 @@ public class RegisterActivity extends AppCompatActivity {
         inputName = findViewById(R.id.inputName);
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
+        inputConfirmPassword = findViewById(R.id.inputConfirmPassword); // ⬅ NEW
         btnRegister = findViewById(R.id.btnRegister);
 
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
         btnRegister.setOnClickListener(v -> registerUser());
-
-
     }
 
     private void registerUser() {
         String name = inputName.getText().toString().trim();
         String email = inputEmail.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();
+        String confirmPassword = inputConfirmPassword.getText().toString().trim();
 
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "All fields required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -56,18 +60,15 @@ public class RegisterActivity extends AppCompatActivity {
                         Map<String, Object> user = new HashMap<>();
                         user.put("name", name);
                         user.put("email", email);
-
-                        //when the user creates their account we do not save this
-                        //will come a default
                         user.put("weight", 0.0);
                         user.put("height", 0.0);
-                        user.put("goal", "Stay Active"); // Default goal
-                        user.put("notifications", true); // Default to on
+                        user.put("goal", "Stay Active");
+                        user.put("notifications", true);
 
                         docRef.set(user)
                                 .addOnSuccessListener(unused -> {
                                     Toast.makeText(this, "User registered!", Toast.LENGTH_SHORT).show();
-                                    finish(); // Return to login
+                                    finish();
                                 })
                                 .addOnFailureListener(e -> {
                                     Toast.makeText(this, "Firestore error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
