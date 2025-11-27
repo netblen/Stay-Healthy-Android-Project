@@ -281,7 +281,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupBottomNavigation() {
-        bottomNavigationView.setSelectedItemId(R.id.nav_home); // Set Home as selected
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
 
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
@@ -290,8 +290,15 @@ public class HomeActivity extends AppCompatActivity {
 
                 if (itemId == R.id.nav_home) {
                     return true;
-                } else if (itemId == R.id.nav_profile) {
-                    // Go to Profile
+                }
+                // --- THIS IS THE MISSING PART ---
+                else if (itemId == R.id.nav_communite) {
+                    startActivity(new Intent(getApplicationContext(), CommunityActivity.class));
+                    overridePendingTransition(0, 0);
+                    return true;
+                }
+                // --------------------------------
+                else if (itemId == R.id.nav_profile) {
                     startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                     overridePendingTransition(0, 0);
                     return true;

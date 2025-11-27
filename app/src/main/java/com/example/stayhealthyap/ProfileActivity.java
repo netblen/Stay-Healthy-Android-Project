@@ -22,7 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -35,8 +34,10 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore firestore;
     private String currentUserId;
-    private TextView tvUsername;
-    private Button btnEdit;
+
+    // UI Elements
+    private TextView tvUsername, tvCurrentGroupProfile;
+    private Button btnEdit, btnLogout; // Added Logout
     private EditText edWeight, edHeight;
     private RadioGroup rgGoals;
     private RadioButton rbWeightLoss, rbBuildMuscle, rbStayActive;
@@ -57,8 +58,11 @@ public class ProfileActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
 
+        // 1. Find all UI Elements
         tvUsername = findViewById(R.id.textView);
+        tvCurrentGroupProfile = findViewById(R.id.tvCurrentGroupProfile);
         btnEdit = findViewById(R.id.btnEdit);
+        btnLogout = findViewById(R.id.btnLogout); // Find Logout
         edWeight = findViewById(R.id.edWeight);
         edHeight = findViewById(R.id.edHeight);
         rgGoals = findViewById(R.id.rgGoals);
@@ -67,33 +71,59 @@ public class ProfileActivity extends AppCompatActivity {
         rbStayActive = findViewById(R.id.rbStayActive);
         switchNotifs = findViewById(R.id.switchNotifs);
 
+        btnEdit.setEnabled(true);
+
         setupBottomNavigation();
-        // Check if user is logged in
+
         if (currentUser != null) {
             currentUserId = currentUser.getUid();
             loadUserProfile();
         } else {
-            // User is not logged in, maybe send them to LoginActivity
             startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
             finish();
         }
 
-        //Set up the Save Button (your btnEdit)
+        // Save Button Listener
         btnEdit.setOnClickListener(v -> saveProfileData());
+
+        // LOGOUT LOGIC
+        btnLogout.setOnClickListener(v -> {
+            auth.signOut();
+            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+            // Clear back stack so user can't press back to return
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private void loadUserProfile() {
         if (currentUserId == null) return;
+
         DocumentReference docRef = firestore.collection("users").document(currentUserId);
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 Log.d("ProfileActivity", "User data found!");
 
-                //Set Username (which you save as "name" during registration)
+                // 1. Set Username
                 String name = documentSnapshot.getString("name");
-                tvUsername.setText(name);
+                if (name != null && !name.isEmpty()) {
+                    tvUsername.setText(name);
+                } else if (auth.getCurrentUser().getEmail() != null) {
+                    tvUsername.setText(auth.getCurrentUser().getEmail().split("@")[0]);
+                }
 
-                // Set Weight
+                // 2. Set Group Status
+                String group = documentSnapshot.getString("currentGroup");
+                if (group != null && !group.isEmpty()) {
+                    tvCurrentGroupProfile.setText("Member of " + group);
+                    tvCurrentGroupProfile.setTextColor(getResources().getColor(android.R.color.holo_green_light));
+                } else {
+                    tvCurrentGroupProfile.setText("Not in a group");
+                    tvCurrentGroupProfile.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                }
+
+                // 3. Set Weight
                 Double weight = documentSnapshot.getDouble("weight");
                 if (weight != null) {
                     edWeight.setText(String.valueOf(weight));
@@ -101,7 +131,7 @@ public class ProfileActivity extends AppCompatActivity {
                     edWeight.setText("0.0");
                 }
 
-                // Set Height
+                // 4. Set Height
                 Double height = documentSnapshot.getDouble("height");
                 if (height != null) {
                     edHeight.setText(String.valueOf(height));
@@ -109,7 +139,7 @@ public class ProfileActivity extends AppCompatActivity {
                     edHeight.setText("0.0");
                 }
 
-                // Set Goal
+                // 5. Set Goal
                 String goal = documentSnapshot.getString("goal");
                 if (goal != null) {
                     if (goal.equals("Weight loss")) {
@@ -120,10 +150,10 @@ public class ProfileActivity extends AppCompatActivity {
                         rbStayActive.setChecked(true);
                     }
                 } else {
-                    rbStayActive.setChecked(true); // Default goal
+                    rbStayActive.setChecked(true);
                 }
 
-                // Set Notifications Switch
+                // 6. Set Notifications
                 Boolean notifications = documentSnapshot.getBoolean("notifications");
                 if (notifications != null) {
                     switchNotifs.setChecked(notifications);
@@ -143,20 +173,17 @@ public class ProfileActivity extends AppCompatActivity {
     private void saveProfileData() {
         if (currentUserId == null) return;
 
-        //Get values from UI elements
         double weight = 0.0;
         double height = 0.0;
 
-        // Use try-catch to prevent crash if user enters invalid number
         try {
             weight = Double.parseDouble(edWeight.getText().toString());
             height = Double.parseDouble(edHeight.getText().toString());
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Please enter valid numbers for weight and height", Toast.LENGTH_SHORT).show();
-            return; // Stop saving if numbers are invalid
+            Toast.makeText(this, "Please enter valid numbers", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        //Get selected goal
         String goal = "";
         int selectedGoalId = rgGoals.getCheckedRadioButtonId();
         if (selectedGoalId == R.id.rbWeightLoss) {
@@ -167,45 +194,47 @@ public class ProfileActivity extends AppCompatActivity {
             goal = "Stay Active";
         }
 
-        // Get notification preference
         boolean notificationsOn = switchNotifs.isChecked();
 
-        // --- Create a Map to send to Firestore ---
         Map<String, Object> userData = new HashMap<>();
         userData.put("weight", weight);
         userData.put("height", height);
         userData.put("goal", goal);
         userData.put("notifications", notificationsOn);
 
-        DocumentReference docRef = firestore.collection("users").document(currentUserId);
-
-        docRef.set(userData, SetOptions.merge())
+        firestore.collection("users").document(currentUserId)
+                .set(userData, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(ProfileActivity.this, "Profile Updated!", Toast.LENGTH_SHORT).show();
-                    btnEdit.setText("Edit"); //You can change text back if you want at same time this is the save button
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(ProfileActivity.this, "Error updating profile", Toast.LENGTH_SHORT).show();
-                    Log.e("ProfileActivity", "Error saving data", e);
                 });
     }
 
     private void setupBottomNavigation() {
-        //bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_profile);
-        bottomNavigationView.setSelectedItemId(R.id.nav_chats);
 
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
+
                 if (itemId == R.id.nav_home) {
-                    // Go to Home
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     overridePendingTransition(0, 0);
                     return true;
-                } else return itemId == R.id.nav_profile;
+                }
+                else if (itemId == R.id.nav_communite) {
+                    startActivity(new Intent(getApplicationContext(), CommunityActivity.class));
+                    overridePendingTransition(0, 0);
+                    return true;
+                }
+                else if (itemId == R.id.nav_profile) {
+                    return true;
+                }
+                return false;
             }
         });
     }
