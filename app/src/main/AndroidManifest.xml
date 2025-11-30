@@ -11,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StayHealthyAP">
+        <activity android:name=".CreateGroupActivity" />
+        <activity android:name=".GroupDetailActivity" android:exported="false" />
+        <activity android:name=".CommunityActivity" android:exported="false" />
         <activity
             android:name=".SleepActivity"
             android:exported="false" />

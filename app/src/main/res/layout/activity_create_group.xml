@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- NEW HEADER: Back Arrow + Title -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="30dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:src="?attr/homeAsUpIndicator"
+            app:tint="#838282" /> <!-- Grey Arrow -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create New Group"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Group Name"
+        android:textColor="#838282"
+        android:layout_marginBottom="10dp"/>
+
+    <EditText
+        android:id="@+id/etGroupName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/edittext_style"
+        android:hint="Ex: Morning Joggers"
+        android:textColor="@color/white"
+        android:textColorHint="#505050"
+        android:paddingLeft="15dp"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose an Icon"
+        android:textColor="#838282"
+        android:layout_marginBottom="15dp"/>
+
+    <!-- ICON SELECTION GRID -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iconRun"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_run"
+            app:tint="@color/white"
+            android:padding="10dp"
+            android:background="@drawable/circle_bg"
+            android:backgroundTint="#333333"
+            android:layout_margin="10dp"/>
+
+        <ImageView
+            android:id="@+id/iconSwim"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_swimming"
+            app:tint="@color/white"
+            android:padding="10dp"
+            android:background="@drawable/circle_bg"
+            android:backgroundTint="#181818"
+            android:layout_margin="10dp"/>
+
+        <ImageView
+            android:id="@+id/iconWorkout"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_circuit_workout"
+            app:tint="@color/white"
+            android:padding="10dp"
+            android:background="@drawable/circle_bg"
+            android:backgroundTint="#181818"
+            android:layout_margin="10dp"/>
+
+        <ImageView
+            android:id="@+id/iconWalk"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_walk"
+            app:tint="@color/white"
+            android:padding="10dp"
+            android:background="@drawable/circle_bg"
+            android:backgroundTint="#181818"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnCreateConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_custom"
+        android:text="Create Group"
+        android:textAllCaps="false"/>
+
+</LinearLayout>
