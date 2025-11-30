@@ -1,41 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#EDEDED">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:orientation="vertical"
         android:padding="24dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="244dp"
+            android:layout_height="162dp"
+            app:srcCompat="@drawable/sh_logo_circle" />
+
+        <TextView
+            android:text="Stay Healthy"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:layout_marginBottom="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/inputName"
             android:hint="Full Name"
+            android:textColorHint="@color/black"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/inputEmail"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:drawableStart="@android:drawable/ic_menu_send"
+            android:hint="Email"
+            android:padding="10dp"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:background="@android:drawable/editbox_background_normal" />
 
         <EditText
             android:id="@+id/inputPassword"
             android:hint="Password"
             android:inputType="textPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:drawableStart="@android:drawable/ic_lock_idle_lock"
+            android:textColorHint="@color/black"
+            android:background="@android:drawable/editbox_background_normal" />
+
+        <!-- Confirm password added -->
+        <EditText
+            android:id="@+id/inputConfirmPassword"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:drawableStart="@android:drawable/ic_lock_idle_lock"
+            android:textColorHint="@color/black"
+            android:background="@android:drawable/editbox_background_normal" />
 
         <Button
             android:id="@+id/btnRegister"
             android:text="Register"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:backgroundTint="#2E7D32"
+            android:padding="10dp"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"/>
 
+        <TextView
+            android:id="@+id/textRegister"
+            android:text="Already have an account? Login"
+            android:textColor="#2E7D32"
+            android:textAlignment="center"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

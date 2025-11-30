@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".SleepActivity">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        app:layout_constraintBottom_toBottomOf="@id/tvSleepTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/white"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tvSleepTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:text="Sleep"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/btnBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSleepTitle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="40dp">
+
+            <Button
+                android:id="@+id/btnChooseDay"
+                android:layout_width="180dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_custom"
+                android:text="Today"
+                android:textAllCaps="false"
+                app:backgroundTint="@null" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView1"
+                android:layout_width="370dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="30dp"
+                app:cardBackgroundColor="#181818"
+                app:cardCornerRadius="25dp">
+
+                <TextView
+                    android:id="@+id/tvSleepSubTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Sleep time"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:id="@+id/layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/circle_bg"
+                        android:backgroundTint="#5521CC">
+
+                        <ImageView
+                            android:id="@+id/imgSleep"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_sleep"
+                            app:tint="@color/white" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvSleepHrs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="__ h"
+                        android:textColor="@color/white"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/tvSleepMins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="__ m"
+                        android:textColor="@color/white"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvSleepStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:gravity="center"
+                    android:paddingHorizontal="40dp"
+                    android:paddingBottom="40dp"
+                    android:text="Record your sleep to see patterns"
+                    android:textColor="#AAAAAA"
+                    android:textSize="13dp" />
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btnEnterSleep"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/btn_custom"
+                android:text="Set Sleep Times"
+                android:textAllCaps="false"
+                app:backgroundTint="@null" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_custom"
+                android:text="Save Sleep Data"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                app:backgroundTint="@null" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="370dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                app:cardBackgroundColor="#181818"
+                app:cardCornerRadius="25dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="234dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:text="Last 7 Days"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TableLayout
+                        android:id="@+id/tableSleepHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="0,1,2">
+
+                        <TableRow android:paddingBottom="10dp">
+
+                            <TextView
+                                android:paddingEnd="10dp"
+                                android:text="Date"
+                                android:textColor="#AAAAAA"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:gravity="center"
+                                android:text="Hrs"
+                                android:textColor="#AAAAAA"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:gravity="end"
+                                android:text="Time"
+                                android:textColor="#AAAAAA"
+                                android:textStyle="bold" />
+                        </TableRow>
+                    </TableLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

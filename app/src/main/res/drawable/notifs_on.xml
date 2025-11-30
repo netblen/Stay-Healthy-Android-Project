@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--need to check in the emulator if there is already color animationto sow to the user if the notifs are oin or off-->
+</shape>
