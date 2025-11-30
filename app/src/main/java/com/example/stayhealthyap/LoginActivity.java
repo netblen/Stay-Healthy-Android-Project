@@ -38,7 +38,9 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
 
-        auth.signOut(); // log out any user
+      // Commented this to actually use the logout page because this
+        // does it automatically but we still need to be able to logout manually
+        // auth.signOut(); // log out any user
 
     }
 
@@ -68,7 +70,9 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(this, MainActivity.class));
+                        //startActivity(new Intent(this, MainActivity.class));
+                        startActivity(new Intent(this, HomeActivity.class)); //wanted to text the home page
+
                         finish();
                     } else {
                         Toast.makeText(this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();

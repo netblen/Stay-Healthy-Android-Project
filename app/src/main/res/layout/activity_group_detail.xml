@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_above="@+id/layoutInputArea">
+
+        <!-- BACK BUTTON -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:src="?attr/homeAsUpIndicator"
+            app:tint="@color/white"/>
+
+        <LinearLayout
+            android:id="@+id/layoutGroupHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_run"
+                app:tint="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvGroupName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Group Name"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <!-- ADDED ID HERE -->
+            <TextView
+                android:id="@+id/tvMemberCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loading..."
+                android:textColor="#838282"/>
+        </LinearLayout>
+
+        <!-- JOIN BUTTON -->
+        <Button
+            android:id="@+id/btnJoinGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_custom"
+            android:text="Join Group"
+            android:textAllCaps="false"/>
+
+        <TextView
+            android:id="@+id/tvHiddenText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:text="Join this group to see the posts!"
+            android:textColor="#838282"
+            android:textSize="16sp"/>
+
+        <!-- POSTS LIST -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGroupPosts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <!-- INPUT AREA -->
+    <LinearLayout
+        android:id="@+id/layoutInputArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:background="#181818"
+        android:visibility="gone"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/etPostInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/edittext_style"
+            android:hint="Type something..."
+            android:textColor="@color/white"
+            android:textColorHint="#838282"
+            android:padding="10dp"
+            android:textSize="14sp"/>
+
+        <ImageButton
+            android:id="@+id/btnSendPost"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/circle_bg"
+            android:backgroundTint="#3AE0A6"
+            android:src="@android:drawable/ic_menu_send"
+            app:tint="@color/white"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
