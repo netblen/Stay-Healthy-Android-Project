@@ -36,13 +36,10 @@
             android:layout_height="wrap_content"
             android:drawableStart="@android:drawable/ic_menu_send"
             android:padding="10dp"
-            android:background="@android:drawable/editbox_background_normal"
+            android:background="@color/white"
             android:textColorHint="@color/black"
             android:textColor="@color/black"
             />
-
-
-        <!--idk wtf this line is referencing android:background="@android:drawable/editbox_background_normal" -->
 
         <EditText
             android:id="@+id/inputPassword"
@@ -53,7 +50,7 @@
             android:layout_height="wrap_content"
             android:drawableStart="@android:drawable/ic_lock_idle_lock"
             android:padding="10dp"
-            android:background="@android:drawable/editbox_background_normal"
+            android:background="@color/white"
             android:textColorHint="@color/black"
             android:textColor="@color/black"/>
 

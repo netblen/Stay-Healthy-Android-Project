@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:padding="15dp">
 
-        <!-- HEADER ROW -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +50,6 @@
                     android:textSize="12sp"/>
             </LinearLayout>
 
-            <!-- KICK BUTTON (Hidden by default) -->
             <TextView
                 android:id="@+id/btnKickUser"
                 android:layout_width="wrap_content"
@@ -62,9 +60,10 @@
                 android:textSize="12sp"
                 android:padding="5dp"
                 android:layout_marginRight="5dp"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:clickable="true"
+                android:focusable="true"/>
 
-            <!-- DELETE BUTTON (Trash) -->
             <ImageButton
                 android:id="@+id/btnDeletePost"
                 android:layout_width="30dp"
@@ -75,7 +74,6 @@
                 android:visibility="gone"/>
         </LinearLayout>
 
-        <!-- CONTENT -->
         <TextView
             android:id="@+id/tvPostContent"
             android:layout_width="wrap_content"
@@ -85,7 +83,6 @@
             android:textColor="@color/white"
             android:textSize="16sp"/>
 
-        <!-- ACTIONS ROW -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,13 +90,14 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- LIKE BUTTON -->
             <LinearLayout
                 android:id="@+id/btnLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:id="@+id/imgHeart"
@@ -117,14 +115,15 @@
                     android:layout_marginLeft="5dp"/>
             </LinearLayout>
 
-            <!-- REPLY BUTTON -->
             <TextView
                 android:id="@+id/btnReply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reply"
                 android:textColor="#838282"
-                android:layout_marginLeft="20dp"/>
+                android:layout_marginLeft="20dp"
+                android:clickable="true"
+                android:focusable="true"/>
 
         </LinearLayout>
     </LinearLayout>

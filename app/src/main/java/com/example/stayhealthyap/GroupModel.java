@@ -5,7 +5,7 @@ public class GroupModel {
     private String icon;
     private long memberCount;
 
-    public GroupModel() {} // Required for Firebase
+    public GroupModel() {}
 
     public GroupModel(String groupName, String icon, long memberCount) {
         this.groupName = groupName;

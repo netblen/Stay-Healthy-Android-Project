@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class CommunityActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private GroupListAdapter adapter;
     private List<GroupModel> groupList;
-    private List<GroupModel> fullGroupList; // For searching
+    private List<GroupModel> fullGroupList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,6 @@ public class CommunityActivity extends AppCompatActivity {
         etSearch = findViewById(R.id.etSearch);
         rvGroupsList = findViewById(R.id.rvGroupsList);
 
-        // Setup List
         rvGroupsList.setLayoutManager(new LinearLayoutManager(this));
         groupList = new ArrayList<>();
         fullGroupList = new ArrayList<>();
@@ -52,10 +52,9 @@ public class CommunityActivity extends AppCompatActivity {
         });
         rvGroupsList.setAdapter(adapter);
 
-        // Fetch Groups
         fetchGroups();
 
-        // Search Logic
+        //Search Logic
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -76,7 +75,7 @@ public class CommunityActivity extends AppCompatActivity {
     }
 
     private void fetchGroups() {
-        db.collection("groups").addSnapshotListener((value, error) -> {
+        db.collection("groups").addSnapshotListener(this, (value, error) -> {
             if (error != null || value == null) return;
 
             groupList.clear();
@@ -84,7 +83,7 @@ public class CommunityActivity extends AppCompatActivity {
 
             for (DocumentSnapshot doc : value.getDocuments()) {
                 GroupModel group = doc.toObject(GroupModel.class);
-                if (group != null) {
+                if (group != null && group.getGroupName() != null && !group.getGroupName().trim().isEmpty()) {
                     groupList.add(group);
                     fullGroupList.add(group);
                 }
@@ -112,7 +111,7 @@ public class CommunityActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_communite);
 
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();

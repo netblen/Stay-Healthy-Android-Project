@@ -1,13 +1,16 @@
 package com.example.stayhealthyap;
 
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,20 +23,22 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 public class SleepActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnChooseDay, btnEnterSleep;
+    Button btnChooseDay, btnEnterSleep, btnSave;
     private ImageView btnBack;
-    private TextView tvSleepHrs, tvSleepMins, tvSleepTitle;
+    private TextView tvSleepHrs, tvSleepMins, tvSleepStatus, tvSleepTitle;
+    private TableLayout tableSleepHistory;
 
     private Calendar selectedCalendar;
     private Calendar sleepTimeCalendar;
@@ -57,6 +62,7 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
         setupFirebase();
         setupDefaultDate();
         loadSleepDataForSelectedDate();
+        loadWeeklyHistory(); //Load the table data on start
     }
 
     private void initialize() {
@@ -66,26 +72,24 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
         btnEnterSleep = findViewById(R.id.btnEnterSleep);
         btnEnterSleep.setOnClickListener(this);
 
+        btnSave = findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(this);
+
         btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> finish());
 
         tvSleepHrs = findViewById(R.id.tvSleepHrs);
         tvSleepMins = findViewById(R.id.tvSleepMins);
+        tvSleepStatus = findViewById(R.id.tvSleepStatus);
         tvSleepTitle = findViewById(R.id.tvSleepTitle);
+        tableSleepHistory = findViewById(R.id.tableSleepHistory);
 
-        // Initialize calendars
         selectedCalendar = Calendar.getInstance();
         sleepTimeCalendar = Calendar.getInstance();
         wakeTimeCalendar = Calendar.getInstance();
 
-        // Default values (10 PM → 6 AM)
-        sleepTimeCalendar.set(Calendar.HOUR_OF_DAY, 22);
-        sleepTimeCalendar.set(Calendar.MINUTE, 0);
-        wakeTimeCalendar.set(Calendar.HOUR_OF_DAY, 6);
-        wakeTimeCalendar.set(Calendar.MINUTE, 0);
-
+        resetToDefaultTimes();
         updateSelectedDateDisplay();
-        updateSleepDurationDisplay();
     }
 
     private void setupFirebase() {
@@ -99,12 +103,10 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
 
     private void updateSelectedDateDisplay() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.getDefault());
-        String todayText = "Today";
-
         Calendar today = Calendar.getInstance();
         if (selectedCalendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
                 selectedCalendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)) {
-            btnChooseDay.setText(todayText);
+            btnChooseDay.setText("Today");
         } else {
             btnChooseDay.setText(dateFormat.format(selectedCalendar.getTime()));
         }
@@ -130,17 +132,17 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         int id = v.getId();
-
         if (id == R.id.btnChooseDay) {
             showCalenderDialog();
         } else if (id == R.id.btnEnterSleep) {
             showSleepTimePicker();
+        } else if (id == R.id.btnSave) {
+            saveSleepData();
         }
     }
 
     private void showSleepTimePicker() {
-        TimePickerDialog sleepTimePicker = new TimePickerDialog(
-                this,
+        TimePickerDialog sleepTimePicker = new TimePickerDialog(this,
                 (view, hourOfDay, minute) -> {
                     sleepTimeCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     sleepTimeCalendar.set(Calendar.MINUTE, minute);
@@ -148,26 +150,24 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
                 },
                 sleepTimeCalendar.get(Calendar.HOUR_OF_DAY),
                 sleepTimeCalendar.get(Calendar.MINUTE),
-                false
-        );
+                false);
         sleepTimePicker.setTitle("Select Sleep Time");
         sleepTimePicker.show();
     }
 
     private void showWakeTimePicker() {
-        TimePickerDialog wakeTimePicker = new TimePickerDialog(
-                this,
+        TimePickerDialog wakeTimePicker = new TimePickerDialog(this,
                 (view, hourOfDay, minute) -> {
                     wakeTimeCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     wakeTimeCalendar.set(Calendar.MINUTE, minute);
 
                     updateSleepDurationDisplay();
-                    saveSleepData();
+                    tvSleepStatus.setText("Review time and click Save");
+                    btnSave.setVisibility(View.VISIBLE);
                 },
                 wakeTimeCalendar.get(Calendar.HOUR_OF_DAY),
                 wakeTimeCalendar.get(Calendar.MINUTE),
-                false
-        );
+                false);
         wakeTimePicker.setTitle("Select Wake Time");
         wakeTimePicker.show();
     }
@@ -180,37 +180,26 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
         Button btnCancel = view.findViewById(R.id.btnCancel);
         Button btnSet = view.findViewById(R.id.btnSet);
 
-        // Temporary selected date (start with current selected date)
         final Calendar tempSelectedCal = (Calendar) selectedCalendar.clone();
 
-        // Listen for date changes
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             tempSelectedCal.set(Calendar.YEAR, year);
             tempSelectedCal.set(Calendar.MONTH, month);
             tempSelectedCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         });
 
-        // Cancel button
         btnCancel.setOnClickListener(v -> btmSheetDialog.dismiss());
-
-        // Set button
         btnSet.setOnClickListener(v -> {
-            // Update actual selected date
             selectedCalendar.setTime(tempSelectedCal.getTime());
-
             updateSelectedDateDisplay();
             loadSleepDataForSelectedDate();
             btmSheetDialog.dismiss();
-
-            Snackbar.make(findViewById(android.R.id.content),
-                    "Date updated successfully",
-                    Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), "Date updated", Snackbar.LENGTH_SHORT).show();
         });
 
         btmSheetDialog.setContentView(view);
         btmSheetDialog.show();
     }
-
 
     private void saveSleepData() {
         if (auth.getCurrentUser() == null) {
@@ -219,13 +208,9 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
         }
 
         String uid = auth.getCurrentUser().getUid();
-
-        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                .format(selectedCalendar.getTime());
-        String sleepTime = new SimpleDateFormat("HH:mm", Locale.getDefault())
-                .format(sleepTimeCalendar.getTime());
-        String wakeTime = new SimpleDateFormat("HH:mm", Locale.getDefault())
-                .format(wakeTimeCalendar.getTime());
+        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(selectedCalendar.getTime());
+        String sleepTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(sleepTimeCalendar.getTime());
+        String wakeTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(wakeTimeCalendar.getTime());
         long duration = calculateSleepDuration();
 
         Map<String, Object> sleepData = new HashMap<>();
@@ -241,20 +226,19 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
 
         ref.set(sleepData).addOnSuccessListener(aVoid -> {
             Toast.makeText(this, "Sleep data saved!", Toast.LENGTH_SHORT).show();
-            tvSleepMins.setText("Sleep recorded: " +
-                    (int)(duration / (1000 * 60 * 60)) + "h " +
-                    (int)((duration % (1000 * 60 * 60)) / (1000 * 60)) + "m");
+            tvSleepStatus.setText("Data saved successfully.");
+            btnSave.setVisibility(View.GONE);
+            loadWeeklyHistory(); //Refresh the table after saving
         }).addOnFailureListener(e ->
-                Toast.makeText(this, "Failed to save sleep data", Toast.LENGTH_SHORT).show());
+                Toast.makeText(this, "Failed to save data", Toast.LENGTH_SHORT).show());
     }
 
     private void loadSleepDataForSelectedDate() {
-
         if (auth.getCurrentUser() == null) return;
         String uid = auth.getCurrentUser().getUid();
+        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(selectedCalendar.getTime());
 
-        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                .format(selectedCalendar.getTime());
+        btnSave.setVisibility(View.GONE);
 
         firestore.collection("sleepData")
                 .document(uid)
@@ -262,11 +246,11 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
                 .document(date)
                 .get()
                 .addOnSuccessListener(doc -> {
-
                     if (doc.exists()) {
                         String sleepTime = doc.getString("sleepTime");
                         String wakeTime = doc.getString("wakeTime");
-                        long duration = doc.getLong("duration");
+                        Long durationObj = doc.getLong("duration");
+                        long duration = (durationObj != null) ? durationObj : 0;
 
                         try {
                             SimpleDateFormat fmt = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -275,16 +259,79 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
                         } catch (Exception ignored) {}
 
                         updateSleepDurationDisplay();
-
-                        tvSleepMins.setText("Loaded sleep: " +
-                                (int)(duration / (1000 * 60 * 60)) + "h " +
-                                (int)((duration % (1000 * 60 * 60)) / (1000 * 60)) + "m");
-
+                        tvSleepStatus.setText("Sleep recorded for this day");
                     } else {
                         resetToDefaultTimes();
-                        tvSleepMins.setText("Record your sleep to see patterns");
+                        tvSleepStatus.setText("No data recorded for this day");
                     }
+                });
+    }
 
+
+    private void loadWeeklyHistory() {
+        if (auth.getCurrentUser() == null) return;
+
+        if (tableSleepHistory == null) {
+            return;
+        }
+
+        String uid = auth.getCurrentUser().getUid();
+
+        int childCount = tableSleepHistory.getChildCount();
+        if (childCount > 1) {
+            tableSleepHistory.removeViews(1, childCount - 1);
+        }
+
+        firestore.collection("sleepData")
+                .document(uid)
+                .collection("dates")
+                .orderBy("date", Query.Direction.DESCENDING)
+                .limit(7)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                        String dateStr = doc.getString("date");
+                        Long durationVal = doc.getLong("duration");
+                        String sleepT = doc.getString("sleepTime");
+                        String wakeT = doc.getString("wakeTime");
+                        long duration = (durationVal != null) ? durationVal : 0;
+
+                        int hours = (int) (duration / (1000 * 60 * 60));
+                        int minutes = (int) ((duration % (1000 * 60 * 60)) / (1000 * 60));
+                        String durationText = hours + "h " + minutes + "m";
+
+                        String shortDate = dateStr;
+                        try {
+                            SimpleDateFormat dbFmt = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            SimpleDateFormat displayFmt = new SimpleDateFormat("MMM d", Locale.getDefault());
+                            shortDate = displayFmt.format(dbFmt.parse(dateStr));
+                        } catch (Exception ignored) {}
+
+                        TableRow row = new TableRow(this);
+                        row.setPadding(0, 15, 0, 15);
+
+                        TextView tvDate = new TextView(this);
+                        tvDate.setText(shortDate);
+                        tvDate.setTextColor(Color.WHITE);
+                        tvDate.setTextSize(14);
+                        row.addView(tvDate);
+
+                        TextView tvDur = new TextView(this);
+                        tvDur.setText(durationText);
+                        tvDur.setTextColor(Color.WHITE);
+                        tvDur.setTextSize(14);
+                        tvDur.setGravity(Gravity.CENTER);
+                        row.addView(tvDur);
+
+                        TextView tvTime = new TextView(this);
+                        tvTime.setText(sleepT + " - " + wakeT);
+                        tvTime.setTextColor(Color.LTGRAY);
+                        tvTime.setTextSize(12);
+                        tvTime.setGravity(Gravity.END);
+                        row.addView(tvTime);
+
+                        tableSleepHistory.addView(row);
+                    }
                 });
     }
 
@@ -293,6 +340,10 @@ public class SleepActivity extends AppCompatActivity implements View.OnClickList
         sleepTimeCalendar.set(Calendar.MINUTE, 0);
         wakeTimeCalendar.set(Calendar.HOUR_OF_DAY, 6);
         wakeTimeCalendar.set(Calendar.MINUTE, 0);
-        updateSleepDurationDisplay();
+        tvSleepHrs.setText("__ h");
+        tvSleepMins.setText("__ m");
+        if (tvSleepStatus != null) {
+            tvSleepStatus.setText("Record your sleep to see patterns");
+        }
     }
 }

@@ -19,6 +19,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.content.Intent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -73,12 +74,10 @@ public class ProfileActivity extends AppCompatActivity {
             currentUserId = currentUser.getUid();
             loadUserProfile();
         } else {
-            // User is not logged in, maybe send them to LoginActivity
             startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
             finish();
         }
 
-        //Set up the Save Button (your btnEdit)
         btnEdit.setOnClickListener(v -> saveProfileData());
     }
 
@@ -89,11 +88,9 @@ public class ProfileActivity extends AppCompatActivity {
             if (documentSnapshot.exists()) {
                 Log.d("ProfileActivity", "User data found!");
 
-                //Set Username (which you save as "name" during registration)
                 String name = documentSnapshot.getString("name");
                 tvUsername.setText(name);
 
-                // Set Weight
                 Double weight = documentSnapshot.getDouble("weight");
                 if (weight != null) {
                     edWeight.setText(String.valueOf(weight));
@@ -101,7 +98,6 @@ public class ProfileActivity extends AppCompatActivity {
                     edWeight.setText("0.0");
                 }
 
-                // Set Height
                 Double height = documentSnapshot.getDouble("height");
                 if (height != null) {
                     edHeight.setText(String.valueOf(height));
@@ -109,7 +105,6 @@ public class ProfileActivity extends AppCompatActivity {
                     edHeight.setText("0.0");
                 }
 
-                // Set Goal
                 String goal = documentSnapshot.getString("goal");
                 if (goal != null) {
                     if (goal.equals("Weight loss")) {
@@ -120,10 +115,9 @@ public class ProfileActivity extends AppCompatActivity {
                         rbStayActive.setChecked(true);
                     }
                 } else {
-                    rbStayActive.setChecked(true); // Default goal
+                    rbStayActive.setChecked(true);
                 }
 
-                // Set Notifications Switch
                 Boolean notifications = documentSnapshot.getBoolean("notifications");
                 if (notifications != null) {
                     switchNotifs.setChecked(notifications);
@@ -143,20 +137,17 @@ public class ProfileActivity extends AppCompatActivity {
     private void saveProfileData() {
         if (currentUserId == null) return;
 
-        //Get values from UI elements
         double weight = 0.0;
         double height = 0.0;
 
-        // Use try-catch to prevent crash if user enters invalid number
         try {
             weight = Double.parseDouble(edWeight.getText().toString());
             height = Double.parseDouble(edHeight.getText().toString());
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Please enter valid numbers for weight and height", Toast.LENGTH_SHORT).show();
-            return; // Stop saving if numbers are invalid
+            return;
         }
 
-        //Get selected goal
         String goal = "";
         int selectedGoalId = rgGoals.getCheckedRadioButtonId();
         if (selectedGoalId == R.id.rbWeightLoss) {
@@ -167,10 +158,8 @@ public class ProfileActivity extends AppCompatActivity {
             goal = "Stay Active";
         }
 
-        // Get notification preference
         boolean notificationsOn = switchNotifs.isChecked();
 
-        // --- Create a Map to send to Firestore ---
         Map<String, Object> userData = new HashMap<>();
         userData.put("weight", weight);
         userData.put("height", height);
@@ -182,7 +171,7 @@ public class ProfileActivity extends AppCompatActivity {
         docRef.set(userData, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(ProfileActivity.this, "Profile Updated!", Toast.LENGTH_SHORT).show();
-                    btnEdit.setText("Edit"); //You can change text back if you want at same time this is the save button
+                    btnEdit.setText("Edit");
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(ProfileActivity.this, "Error updating profile", Toast.LENGTH_SHORT).show();
@@ -191,21 +180,26 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setupBottomNavigation() {
-        //bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
-        bottomNavigationView.setSelectedItemId(R.id.nav_chats);
 
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+        bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.nav_home) {
-                    // Go to Home
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     overridePendingTransition(0, 0);
                     return true;
-                } else return itemId == R.id.nav_profile;
+                } else if (itemId == R.id.nav_communite) {
+                    startActivity(new Intent(getApplicationContext(), CommunityActivity.class));
+                    overridePendingTransition(0, 0);
+                    return true;
+                } else if (itemId == R.id.nav_profile) {
+                    return true;
+                }
+                return false;
             }
         });
     }

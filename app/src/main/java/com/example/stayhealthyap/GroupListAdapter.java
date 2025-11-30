@@ -36,35 +36,17 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.Grou
     @Override
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
         GroupModel group = groupList.get(position);
-
-        // Fix for "Ghost Groups" (Empty blocks)
-        if (group.getGroupName() == null || group.getGroupName().isEmpty()) {
-            holder.itemView.setVisibility(View.GONE);
-            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
-            return;
-        } else {
-            holder.itemView.setVisibility(View.VISIBLE);
-            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        }
-
         holder.tvName.setText(group.getGroupName());
 
-        // Fix Grammar: "1 Member" vs "2 Members"
         long count = group.getMemberCount();
-        if (count == 1) {
-            holder.tvMembers.setText("1 Member");
-        } else {
-            holder.tvMembers.setText(count + " Members");
-        }
+        holder.tvMembers.setText(count == 1 ? "1 Member" : count + " Members");
 
-        // Icon Logic
         int iconResId = R.drawable.ic_run;
         if ("ic_swimming".equals(group.getIcon())) iconResId = R.drawable.ic_swimming;
         else if ("ic_circuit_workout".equals(group.getIcon())) iconResId = R.drawable.ic_circuit_workout;
         else if ("ic_walk".equals(group.getIcon())) iconResId = R.drawable.ic_walk;
 
         holder.imgIcon.setImageResource(iconResId);
-
         holder.itemView.setOnClickListener(v -> listener.onGroupClick(group.getGroupName()));
     }
 
