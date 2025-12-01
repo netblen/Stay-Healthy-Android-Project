@@ -13,7 +13,7 @@
         android:padding="20dp"
         android:layout_above="@+id/layoutInputArea">
 
-        <!-- BACK BUTTON -->
+
         <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="40dp"

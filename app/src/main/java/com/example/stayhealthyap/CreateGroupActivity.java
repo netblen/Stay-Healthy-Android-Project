@@ -1,5 +1,7 @@
 package com.example.stayhealthyap;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,7 +19,7 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateGroupActivity extends AppCompatActivity {
+public class CreateGroupActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText etGroupName;
     private ImageView iconRun, iconSwim, iconWorkout, iconWalk;
@@ -53,6 +55,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         btnCreateConfirm.setOnClickListener(v -> createGroup());
 
         btnBack.setOnClickListener(v -> finish());
+
     }
 
     private void selectIcon(String iconName, ImageView selectedView) {
@@ -94,6 +97,8 @@ public class CreateGroupActivity extends AppCompatActivity {
             // IF NOT IN GROUP -> PROCEED
             finalizeGroupCreation(name, userId);
         });
+
+
     }
 
     private void finalizeGroupCreation(String name, String userId) {
@@ -127,10 +132,19 @@ public class CreateGroupActivity extends AppCompatActivity {
                     db.collection("users").document(userId).set(userUpdate, SetOptions.merge());
 
                     Toast.makeText(this, "Group Created!", Toast.LENGTH_SHORT).show();
+
+                    Intent resultIntent = new Intent();
+                    setResult(Activity.RESULT_OK, resultIntent);
+
                     finish(); // Return to list
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Error creating group", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

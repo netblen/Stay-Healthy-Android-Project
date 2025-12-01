@@ -7,12 +7,13 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <!-- NEW HEADER: Back Arrow + Title -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:paddingTop="20dp"
         android:layout_marginBottom="30dp">
 
         <ImageButton
@@ -20,7 +21,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@null"
-            android:src="?attr/homeAsUpIndicator"
+            android:src="@drawable/ic_arrow_back"
             app:tint="#838282" /> <!-- Grey Arrow -->
 
         <TextView

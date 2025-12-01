@@ -37,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private String currentUserId;
     private TextView tvUsername;
-    private Button btnEdit;
+    private Button btnEdit, btnLogout;
     private EditText edWeight, edHeight;
     private RadioGroup rgGoals;
     private RadioButton rbWeightLoss, rbBuildMuscle, rbStayActive;
@@ -60,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         tvUsername = findViewById(R.id.textView);
         btnEdit = findViewById(R.id.btnEdit);
+        btnLogout = findViewById(R.id.btnLogout); // Find new Logout
         edWeight = findViewById(R.id.edWeight);
         edHeight = findViewById(R.id.edHeight);
         rgGoals = findViewById(R.id.rgGoals);
@@ -79,6 +80,17 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         btnEdit.setOnClickListener(v -> saveProfileData());
+
+
+        btnLogout.setOnClickListener(v -> {
+            auth.signOut();
+            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+            // Clear back stack so user can't press back to return
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
+        
     }
 
     private void loadUserProfile() {
@@ -108,6 +120,7 @@ public class ProfileActivity extends AppCompatActivity {
                 String goal = documentSnapshot.getString("goal");
                 if (goal != null) {
                     if (goal.equals("Weight loss")) {
+                        rbWeightLoss.setChecked(true);
                         rbWeightLoss.setChecked(true);
                     } else if (goal.equals("Build up Muscle")) {
                         rbBuildMuscle.setChecked(true);
