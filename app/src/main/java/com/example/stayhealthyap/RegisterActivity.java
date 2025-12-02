@@ -1,13 +1,17 @@
 package com.example.stayhealthyap;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +19,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText inputName, inputEmail, inputPassword, inputConfirmPassword;
     private Button btnRegister;
+    private TextView textLogin;
     private FirebaseAuth auth;
     private FirebaseFirestore firestore;
 
@@ -26,8 +31,13 @@ public class RegisterActivity extends AppCompatActivity {
         inputName = findViewById(R.id.inputName);
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
-        inputConfirmPassword = findViewById(R.id.inputConfirmPassword); // ⬅ NEW
+        inputConfirmPassword = findViewById(R.id.inputConfirmPassword);
         btnRegister = findViewById(R.id.btnRegister);
+
+        textLogin = findViewById(R.id.textRegister);
+        textLogin.setOnClickListener(v -> {
+            finish();
+        });
 
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();

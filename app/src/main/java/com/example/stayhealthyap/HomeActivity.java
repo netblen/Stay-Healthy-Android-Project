@@ -144,15 +144,31 @@ public class HomeActivity extends AppCompatActivity {
                         tvWeight.setText(String.format(Locale.getDefault(), "%.1f kg", dailyWeight));
                     }
 
-                    if (documentSnapshot.contains("total_workout_minutes")) {
-                        double minutes = documentSnapshot.getDouble("total_workout_minutes");
+                    if (documentSnapshot.contains("total_workout_seconds")) {
+                        long totalSeconds = documentSnapshot.getLong("total_workout_seconds");
+
+                        long hours = totalSeconds / 3600;
+                        long minutes = (totalSeconds % 3600) / 60;
+                        long seconds = totalSeconds % 60;
+
+                        String formattedTime = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+
+                        tvTimeMoved.setText(formattedTime);
+                        tvTimeWorkedOutThisWeek.setText(formattedTime);
+
+                    } else if (documentSnapshot.contains("total_workout_minutes")) {
+                        Double minutesVal = documentSnapshot.getDouble("total_workout_minutes");
+                        double minutes = (minutesVal != null) ? minutesVal : 0.0;
+
                         String formattedMinutes = String.format(Locale.getDefault(), "%.0f", minutes);
                         tvTimeMoved.setText(formattedMinutes);
+
                         String weeklyFormat = String.format(Locale.getDefault(), "%02d:%02d", (int)minutes / 60, (int)minutes % 60);
                         tvTimeWorkedOutThisWeek.setText(weeklyFormat);
                     } else {
-                        tvTimeMoved.setText("0");
-                        tvTimeWorkedOutThisWeek.setText("00:00");
+                        // No workout data yet
+                        tvTimeMoved.setText("00:00:00");
+                        tvTimeWorkedOutThisWeek.setText("00:00:00");
                     }
 
                     if (documentSnapshot.contains("steps")) {
@@ -170,8 +186,8 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 } else {
                     Log.d("HomeActivity", "No daily data for " + todayDate);
-                    tvTimeMoved.setText("0");
-                    tvTimeWorkedOutThisWeek.setText("00:00");
+                    tvTimeMoved.setText("00:00:00");
+                    tvTimeWorkedOutThisWeek.setText("00:00:00");
                     tvStepsData.setText("0");
                     tvCalsBurnt.setText("0");
                 }
@@ -183,7 +199,6 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(HomeActivity.this, "Error loading profile data", Toast.LENGTH_SHORT).show();
         });
     }
-
     private void saveWeightData() {
         String weight = eWeightData.getText().toString().trim();
         if (weight.isEmpty()) {
@@ -227,26 +242,25 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupBottomNavigation() {
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
 
-                if (itemId == R.id.nav_home) {
-                    return true;
-                }
-                else if (itemId == R.id.nav_communite) {
-                    startActivity(new Intent(getApplicationContext(), CommunityActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-                }
-                else if (itemId == R.id.nav_profile) {
-                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-                }
-                return false;
+            if (itemId == R.id.nav_home) {
+                return true;
             }
+            else if (itemId == R.id.nav_communite) {
+                Intent intent = new Intent(getApplicationContext(), CommunityActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                return true;
+            }
+            else if (itemId == R.id.nav_profile) {
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                return true;
+            }
+            return false;
         });
     }
 }

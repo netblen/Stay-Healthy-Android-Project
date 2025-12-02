@@ -12,11 +12,6 @@
         android:title="Communite"/>
 
     <item
-        android:id="@+id/nav_chats"
-        android:icon="@drawable/ic_chats"
-        android:title="chat"/>
-
-    <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile"
         android:title="Profile"/>

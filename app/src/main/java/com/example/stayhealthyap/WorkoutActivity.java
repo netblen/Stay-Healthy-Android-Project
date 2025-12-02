@@ -185,44 +185,38 @@ public class WorkoutActivity extends AppCompatActivity {
 
         double elapsedMinutes = timeInSeconds / 60.0;
 
-        //If they did not work out for at least ~6 seconds, don't save
         if (elapsedMinutes < 0.1) {
             Toast.makeText(this, "No workout time recorded", Toast.LENGTH_SHORT).show();
-            finish(); //Go back without saving
+            finish();
             return;
         }
 
-        //Calculates the total km and calories
         double totalKm = totalMeters / 1000.0;
         double caloriesBurned = elapsedMinutes * caloriesPerMinute;
 
-        //Save the data
-        saveWorkoutData(elapsedMinutes, (long) estimatedSteps, totalKm, caloriesBurned);
+        saveWorkoutData(elapsedMinutes, timeInSeconds, (long) estimatedSteps, totalKm, caloriesBurned);
     }
-
-    /// ///////////////
     //Saves all the data to the database
-    private void saveWorkoutData(double elapsedMinutes, long totalSteps, double totalKm, double caloriesBurned) {
+    private void saveWorkoutData(double elapsedMinutes, long elapsedSeconds, long totalSteps, double totalKm, double caloriesBurned) {
         Toast.makeText(this, "Saving...", Toast.LENGTH_SHORT).show();
 
         DocumentReference todayDocRef = firestore.collection("users").document(userId)
                 .collection("daily_activities").document(todayDate);
 
-        // --- Read the data that is already in the database ---
-        // This is important so we can ADD to it
         todayDocRef.get().addOnSuccessListener(documentSnapshot -> {
 
-            // These variables will hold the old data
             double existingMinutes = 0.0;
+            long existingSeconds = 0;
             double existingSteps = 0.0;
             double existingCals = 0.0;
             double existingKm = 0.0;
 
-            // Check if a document for today already exists
             if (documentSnapshot.exists()) {
-                // If it exists, get the old values
                 if (documentSnapshot.contains("total_workout_minutes")) {
                     existingMinutes = documentSnapshot.getDouble("total_workout_minutes");
+                }
+                if (documentSnapshot.contains("total_workout_seconds")) {
+                    existingSeconds = documentSnapshot.getLong("total_workout_seconds");
                 }
                 if (documentSnapshot.contains("steps")) {
                     existingSteps = documentSnapshot.getDouble("steps");
@@ -235,30 +229,26 @@ public class WorkoutActivity extends AppCompatActivity {
                 }
             }
 
-            // --- Add our new workout to the old data ---
             double newTotalMinutes = existingMinutes + elapsedMinutes;
+            long newTotalSeconds = existingSeconds + elapsedSeconds;
             double newTotalSteps = existingSteps + totalSteps;
             double newTotalCals = existingCals + caloriesBurned;
             double newTotalKm = existingKm + totalKm;
 
-            // --- Prepare the data to be saved ---
             Map<String, Object> activity = new HashMap<>();
-            activity.put("timestamp", new Date()); //Put the current time
+            activity.put("timestamp", new Date());
             activity.put("last_exercise_type", workoutType);
 
-            //Save the new data
             activity.put("total_workout_minutes", newTotalMinutes);
+            activity.put("total_workout_seconds", newTotalSeconds);
             activity.put("steps", newTotalSteps);
             activity.put("cals_burnt", newTotalCals);
             activity.put("total_km", newTotalKm);
 
-            // --- Save to database ---
-            // SetOptions.merge() is very important!
-            // It tells Firebase to UPDATE these fields, not overwrite the whole file.
             todayDocRef.set(activity, SetOptions.merge())
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(WorkoutActivity.this, "Workout saved!", Toast.LENGTH_SHORT).show();
-                        finish(); // Go back to HomeActivity
+                        finish();
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(WorkoutActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();

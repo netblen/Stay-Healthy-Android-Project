@@ -52,8 +52,6 @@ public class CommunityActivity extends AppCompatActivity {
         });
         rvGroupsList.setAdapter(adapter);
 
-        fetchGroups();
-
         //Search Logic
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -72,6 +70,17 @@ public class CommunityActivity extends AppCompatActivity {
         });
 
         setupBottomNavigation();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchGroups();
+
+        // Ensure the correct bottom nav item is selected when returning
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_communite);
+        }
     }
 
     private void fetchGroups() {

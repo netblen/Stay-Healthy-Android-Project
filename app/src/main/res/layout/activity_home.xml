@@ -130,7 +130,8 @@
                     android:id="@+id/tvStepsData"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="300dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginRight="30dp"
                     android:layout_marginTop="50dp"
                     android:text="0"
                     android:textColor="#838282"
@@ -162,14 +163,15 @@
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="80dp"
                     android:padding="20dp"
-                    android:text="mins"
+                    android:text="Time"
                     android:textSize="20dp" />
 
                 <TextView
                     android:id="@+id/tvTimeMoved"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="300dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginRight="30dp"
                     android:layout_marginTop="103dp"
                     android:text="0"
                     android:textColor="#838282"
@@ -208,7 +210,8 @@
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="300dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginRight="30dp"
                     android:layout_marginTop="150dp"
                     android:text="0"
                     android:textColor="#838282"
@@ -371,7 +374,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="25dp"
-                    android:text="00:00"
+                    android:text="00:00:00"
                     android:textSize="25dp" />
 
                 <TextView
@@ -436,8 +439,9 @@
                     android:background="@drawable/edittext_style"
                     android:ems="6"
                     android:inputType="numberDecimal"
-                    android:text=" Enter Weight"
-                    android:textColor="#838282" />
+                    android:hint="Enter Weight"
+                    android:textColorHint="#838282"
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/btnEnterWeight"
@@ -475,67 +479,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--
-
-cRD VIEW 1 <EditText
-                    android:id="@+id/edSleepData"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="230dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/edittext_style"
-                    android:ems="6"
-                    android:inputType="numberDecimal"
-                    android:text="Enter data"
-                    android:gravity="center"
-                    android:textColor="#838282" />
-
-
-
-                <Button
-                    android:id="@+id/btnEnterSleep"
-                    android:layout_width="180dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="70dp"
-                    android:background="@drawable/btn_custom"
-                    android:text="Record this time"
-                    android:textAllCaps="false"/>
-
- <EditText
-            android:id="@+id/edStepsData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="5"
-            android:inputType="numberDecimal"
-            android:text=" Enter steps"
-            android:layout_marginLeft="230dp"
-            android:layout_marginTop="35dp"
-            android:textColor="#838282"
-            android:backgroundTint="#838282"/>
-
-
-<EditText
-            android:id="@+id/edTimeMoveData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="5"
-            android:inputType="numberDecimal"
-            android:text=" Enter time"
-            android:layout_marginLeft="230dp"
-            android:layout_marginTop="90dp"
-            android:textColor="#838282"
-            android:backgroundTint="#838282"/>
-
-<EditText
-            android:id="@+id/edTimeCalsBurnt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="5"
-            android:inputType="numberDecimal"
-            android:text=" Enter Cals"
-            android:layout_marginLeft="230dp"
-            android:layout_marginTop="140dp"
-            android:textColor="#838282"
-            android:backgroundTint="#838282"/>-->

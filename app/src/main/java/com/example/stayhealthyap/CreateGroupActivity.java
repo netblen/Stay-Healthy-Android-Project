@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
@@ -55,7 +54,6 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         btnCreateConfirm.setOnClickListener(v -> createGroup());
 
         btnBack.setOnClickListener(v -> finish());
-
     }
 
     private void selectIcon(String iconName, ImageView selectedView) {
@@ -82,23 +80,30 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         if (auth.getCurrentUser() == null) return;
         String userId = auth.getCurrentUser().getUid();
 
-        // --- CHECK IF USER IS ALREADY IN A GROUP ---
+        //Check if group name ALREADY exists
+        db.collection("groups").document(name).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Toast.makeText(this, "Group name already taken!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        checkUserAndCreate(name, userId);
+                    }
+                });
+    }
+
+    private void checkUserAndCreate(String name, String userId) {
         db.collection("users").document(userId).get().addOnSuccessListener(userDoc -> {
             if (userDoc.exists() && userDoc.contains("currentGroup")) {
                 String currentGroup = userDoc.getString("currentGroup");
 
-                // IF IN A GROUP -> BLOCK CREATION
                 if (currentGroup != null && !currentGroup.isEmpty()) {
-                    Toast.makeText(this, "You can only be in 1 group at a time. Please leave '" + currentGroup + "' first.", Toast.LENGTH_LONG).show();
-                    return; // Stop execution here
+                    Toast.makeText(this, "You are already in a group (" + currentGroup + "). Leave it first.", Toast.LENGTH_LONG).show();
+                    return;
                 }
             }
 
-            // IF NOT IN GROUP -> PROCEED
             finalizeGroupCreation(name, userId);
         });
-
-
     }
 
     private void finalizeGroupCreation(String name, String userId) {
@@ -136,7 +141,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                     Intent resultIntent = new Intent();
                     setResult(Activity.RESULT_OK, resultIntent);
 
-                    finish(); // Return to list
+                    finish();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Error creating group", Toast.LENGTH_SHORT).show();
