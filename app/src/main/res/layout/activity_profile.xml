@@ -58,6 +58,20 @@
                         app:shapeAppearanceOverlay="@style/RoundedImageViewCircle" />
                     <!--was trying to use margin top -40dp top make it still out and clishape flase to stop it fronm cutting the ikmage but it didnt work-->
 
+                    <Button
+                        android:id="@+id/btnEdit"
+                        android:layout_width="60dp"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/btn_custom"
+                        android:fontFamily="sans-serif"
+                        android:text="Edit"
+                        android:textAllCaps="false"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@id/profileImage"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/profileImage" />
+
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
